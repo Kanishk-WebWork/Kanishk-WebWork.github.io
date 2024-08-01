@@ -47,7 +47,7 @@ async function getSongs(type, folder) {
     currtype = type;
 
     try {
-        let response = await fetchText(`Songs/${currtype}/${folder}/`);
+        let response = await fetchText(`Songs/${currtype}/${folder}`);
         let div = document.createElement("div");
         div.innerHTML = response;
         let as = div.getElementsByTagName("a");
@@ -97,7 +97,7 @@ function updateSongListUI() {
 
 async function displayAlbums(type) {
     try {
-        let response = await fetchText(`Songs/${type}/`);
+        let response = await fetchText(`Songs/${type}`);
         let div = document.createElement("div");
         div.innerHTML = response;
         let anchors = div.getElementsByTagName("a");
@@ -108,7 +108,7 @@ async function displayAlbums(type) {
             // Debugging: Log the anchor hrefs
             console.log('Anchor href:', anchor.href);
 
-            if (anchor.href.includes(`Songs/${type}/`)) {
+            if (anchor.href.includes(`Songs/${type}`)) {
                 let folder = anchor.href.split("/").slice(-2)[0].replace("%20", " ");
                 
                 // Debugging: Log the folder name
