@@ -170,12 +170,20 @@ function setupEventListeners() {
     });
 
     previous.addEventListener("click", () => {
-    let currentIndex = songs.findIndex(song => song === currentSong.src);
+    // Decode current song src for comparison
+    let decodedCurrentSrc = decodeURIComponent(currentSong.src);
+    
+    let currentIndex = songs.findIndex(song => decodeURIComponent(song) === decodedCurrentSrc);
+    
+    console.log('Current Index (Previous):', currentIndex);
+    console.log('Current Song Source:', decodedCurrentSrc);
+    console.log('Songs Array:', songs);
+
     if (currentIndex === -1) {
-        // Handle the case where currentSong.src is not in the list of songs
         console.warn('Current song is not in the list of songs.');
         return;
     }
+
     if (currentIndex > 0) {
         playMusic(songs[currentIndex - 1]);
     } else {
@@ -185,12 +193,20 @@ function setupEventListeners() {
 });
 
 next.addEventListener("click", () => {
-    let currentIndex = songs.findIndex(song => song === currentSong.src);
+    // Decode current song src for comparison
+    let decodedCurrentSrc = decodeURIComponent(currentSong.src);
+    
+    let currentIndex = songs.findIndex(song => decodeURIComponent(song) === decodedCurrentSrc);
+    
+    console.log('Current Index (Next):', currentIndex);
+    console.log('Current Song Source:', decodedCurrentSrc);
+    console.log('Songs Array:', songs);
+
     if (currentIndex === -1) {
-        // Handle the case where currentSong.src is not in the list of songs
         console.warn('Current song is not in the list of songs.');
         return;
     }
+
     if (currentIndex + 1 < songs.length) {
         playMusic(songs[currentIndex + 1]);
     } else {
@@ -198,6 +214,7 @@ next.addEventListener("click", () => {
         playMusic(songs[0]);
     }
 });
+
 
     document.querySelector(".range input").addEventListener("change", (e) => {
         currentSong.volume = parseInt(e.target.value) / 100;
