@@ -170,11 +170,11 @@ function setupEventListeners() {
     });
 
     previous.addEventListener("click", () => {
-    // Normalize the current song URL
-    const currentSrc = new URL(currentSong.src).pathname;
+    // Normalize the current song URL by replacing '%20' with a space
+    const currentSrc = currentSong.src.replaceAll("%20", ' ');
     
     // Find the index of the current song in the songs array
-    const currentIndex = songs.findIndex(song => new URL(song).pathname === currentSrc);
+    const currentIndex = songs.findIndex(song => song.replaceAll("%20", ' ') === currentSrc);
     
     console.log('Current Index (Previous):', currentIndex);
     console.log('Current Song Source:', currentSrc);
@@ -194,11 +194,11 @@ function setupEventListeners() {
 });
 
 next.addEventListener("click", () => {
-    // Normalize the current song URL
-    const currentSrc = new URL(currentSong.src).pathname;
+    // Normalize the current song URL by replacing '%20' with a space
+    const currentSrc = currentSong.src.replaceAll("%20", ' ');
     
     // Find the index of the current song in the songs array
-    const currentIndex = songs.findIndex(song => new URL(song).pathname === currentSrc);
+    const currentIndex = songs.findIndex(song => song.replaceAll("%20", ' ') === currentSrc);
     
     console.log('Current Index (Next):', currentIndex);
     console.log('Current Song Source:', currentSrc);
@@ -216,6 +216,7 @@ next.addEventListener("click", () => {
         playMusic(songs[0]);
     }
 });
+
 
 
 
