@@ -258,7 +258,7 @@ function setupEventListeners() {
 }
 
 async function main() {
-    await getSongs("Artists", "National Sweetheart");
+    await getSongs("Mood", "Bright");
     playMusic(songs[0], true);
     displayAlbums("Artists");
     displayAlbums("Mood");
