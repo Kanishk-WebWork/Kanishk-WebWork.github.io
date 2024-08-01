@@ -42,7 +42,6 @@ function playMusic(track, pause = false) {
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
 }
 
-
 async function getSongs(type, folder) {
     currfolder = folder;
     currtype = type;
@@ -95,8 +94,6 @@ function updateSongListUI() {
         });
     });
 }
-
-
 
 async function displayAlbums(type) {
     try {
