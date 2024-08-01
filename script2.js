@@ -170,33 +170,34 @@ function setupEventListeners() {
     });
 
     previous.addEventListener("click", () => {
-        let currentIndex = songs.indexOf(currentSong.src);
-        if (currentIndex === -1) {
-            // If currentSong.src is not found in songs array, handle it gracefully
-            console.warn('Current song is not in the list of songs.');
-            return;
-        }
-        if (currentIndex > 0) {
-            playMusic(songs[currentIndex - 1]);
-        } else {
-            playMusic(currentSong.src);
-        }
-    });
+    let currentIndex = songs.findIndex(song => song === currentSong.src);
+    if (currentIndex === -1) {
+        // Handle the case where currentSong.src is not in the list of songs
+        console.warn('Current song is not in the list of songs.');
+        return;
+    }
+    if (currentIndex > 0) {
+        playMusic(songs[currentIndex - 1]);
+    } else {
+        // Optionally loop to the last song if at the beginning
+        playMusic(songs[songs.length - 1]);
+    }
+});
 
-    next.addEventListener("click", () => {
-        let currentIndex = songs.indexOf(currentSong.src);
-        if (currentIndex === -1) {
-            // If currentSong.src is not found in songs array, handle it gracefully
-            console.warn('Current song is not in the list of songs.');
-            return;
-        }
-        if (currentIndex + 1 < songs.length) {
-            playMusic(songs[currentIndex + 1]);
-        } else {
-            currentSong.pause();
-            play.src = 'Assets/playsong.svg';
-        }
-    });
+next.addEventListener("click", () => {
+    let currentIndex = songs.findIndex(song => song === currentSong.src);
+    if (currentIndex === -1) {
+        // Handle the case where currentSong.src is not in the list of songs
+        console.warn('Current song is not in the list of songs.');
+        return;
+    }
+    if (currentIndex + 1 < songs.length) {
+        playMusic(songs[currentIndex + 1]);
+    } else {
+        // Optionally loop to the first song if at the end
+        playMusic(songs[0]);
+    }
+});
 
     document.querySelector(".range input").addEventListener("change", (e) => {
         currentSong.volume = parseInt(e.target.value) / 100;
