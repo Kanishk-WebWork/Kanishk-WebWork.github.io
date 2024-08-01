@@ -36,7 +36,7 @@ function playMusic(track, pause = false) {
 
     if (!pause) {
         currentSong.play();
-        play.src = '/Assets/pause.svg';
+        play.src = 'Assets/pause.svg';
     }
     document.querySelector(".songinfo").innerHTML = decodeURI(track).split('/').slice(-1)[0].slice(0, -4);
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
@@ -159,10 +159,10 @@ function setupEventListeners() {
     play.addEventListener("click", () => {
         if (currentSong.paused) {
             currentSong.play();
-            play.src = '/Assets/pause.svg';
+            play.src = 'Assets/pause.svg';
         } else {
             currentSong.pause();
-            play.src = '/Assets/playsong.svg';
+            play.src = 'Assets/playsong.svg';
         }
     });
 
@@ -212,7 +212,7 @@ function setupEventListeners() {
             playMusic(songs[currentIndex + 1]);
         } else {
             currentSong.pause();
-            play.src = '/Assets/playsong.svg';
+            play.src = 'Assets/playsong.svg';
         }
     });
     
