@@ -174,7 +174,7 @@ function setupEventListeners() {
     const currentSrc = currentSong.src.replaceAll("%20", ' ');
     
     // Find the index of the current song in the songs array
-    const currentIndex = songs.findIndex(song => song.replaceAll("%20", ' ') === currentSrc);
+    const currentIndex = songs.findIndex(song => song === currentSrc);
     
     console.log('Current Index (Previous):', currentIndex);
     console.log('Current Song Source:', currentSrc);
@@ -198,7 +198,7 @@ next.addEventListener("click", () => {
     const currentSrc = currentSong.src.replaceAll("%20", ' ');
     
     // Find the index of the current song in the songs array
-    const currentIndex = songs.findIndex(song => song.replaceAll("%20", ' ') === currentSrc);
+    const currentIndex = songs.findIndex(song => song === currentSrc);
     
     console.log('Current Index (Next):', currentIndex);
     console.log('Current Song Source:', currentSrc);
