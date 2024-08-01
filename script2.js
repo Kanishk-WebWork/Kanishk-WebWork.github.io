@@ -170,13 +170,14 @@ function setupEventListeners() {
     });
 
     previous.addEventListener("click", () => {
-    // Decode current song src for comparison
-    let decodedCurrentSrc = decodeURIComponent(currentSong.src);
+    // Normalize the current song URL
+    const currentSrc = new URL(currentSong.src).pathname;
     
-    let currentIndex = songs.findIndex(song => decodeURIComponent(song) === decodedCurrentSrc);
+    // Find the index of the current song in the songs array
+    const currentIndex = songs.findIndex(song => new URL(song).pathname === currentSrc);
     
     console.log('Current Index (Previous):', currentIndex);
-    console.log('Current Song Source:', decodedCurrentSrc);
+    console.log('Current Song Source:', currentSrc);
     console.log('Songs Array:', songs);
 
     if (currentIndex === -1) {
@@ -193,13 +194,14 @@ function setupEventListeners() {
 });
 
 next.addEventListener("click", () => {
-    // Decode current song src for comparison
-    let decodedCurrentSrc = decodeURIComponent(currentSong.src);
+    // Normalize the current song URL
+    const currentSrc = new URL(currentSong.src).pathname;
     
-    let currentIndex = songs.findIndex(song => decodeURIComponent(song) === decodedCurrentSrc);
+    // Find the index of the current song in the songs array
+    const currentIndex = songs.findIndex(song => new URL(song).pathname === currentSrc);
     
     console.log('Current Index (Next):', currentIndex);
-    console.log('Current Song Source:', decodedCurrentSrc);
+    console.log('Current Song Source:', currentSrc);
     console.log('Songs Array:', songs);
 
     if (currentIndex === -1) {
@@ -214,6 +216,7 @@ next.addEventListener("click", () => {
         playMusic(songs[0]);
     }
 });
+
 
 
     document.querySelector(".range input").addEventListener("change", (e) => {
