@@ -256,7 +256,8 @@ function setupEventListeners() {
 
 async function main() {
     await getSongs("Mood", "Bright");
-    playMusic(songs[0], true);
+    const track = 'Songs/Mood/Bright/Construyendo en el Espacio - Luna Cantina.mp3';
+    playMusic(track, true);
     displayAlbums("Artists");
     displayAlbums("Mood");
     displayAlbums("Genre");
