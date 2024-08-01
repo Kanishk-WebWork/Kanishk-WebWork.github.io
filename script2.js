@@ -3,14 +3,6 @@ let currfolder;
 let currentSong = new Audio();
 let songs = [];
 
-async function fetchText(url) {
-    let response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch ${url}`);
-    }
-    return await response.text();
-}
-
 async function fetchJSON(url) {
     let response = await fetch(url);
     if (!response.ok) {
@@ -47,15 +39,17 @@ async function getSongs(type, folder) {
     currtype = type;
 
     try {
-        let response = await fetchText(`Songs/${currtype}/${folder}`);
-        let div = document.createElement("div");
-        div.innerHTML = response;
-        let as = div.getElementsByTagName("a");
+        const owner = 'Kanishk-WebWork'; // Replace with your GitHub username
+        const repo = 'Kanishk-WebWork.github.io'; // Replace with your repository name
+        const path = `Songs/${currtype}/${folder}`;
+        const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
+        let response = await fetchJSON(url);
         songs = []; // Clear the old playlist
-        for (let element of as) {
-            if (element.href.endsWith(".mp3")) {
-                const splitResult = element.href.split(`/${currfolder}/`);
-                songs.push(splitResult.length == 1 ? splitResult[0] : `Songs/${currtype}/${currfolder}/${splitResult[1]}`);
+
+        for (let file of response) {
+            if (file.name.endsWith(".mp3")) {
+                songs.push(`${path}/${file.name}`);
             }
         }
 
@@ -97,29 +91,20 @@ function updateSongListUI() {
 
 async function displayAlbums(type) {
     try {
-        let response = await fetchText(`Songs/${type}`);
-        let div = document.createElement("div");
-        div.innerHTML = response;
-        let anchors = div.getElementsByTagName("a");
+        const owner = 'your-username'; // Replace with your GitHub username
+        const repo = 'your-repo'; // Replace with your repository name
+        const path = `Songs/${type}`;
+        const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
+        let response = await fetchJSON(url);
         let cardContainer = document.querySelector(`.${type.toLowerCase()}`);
         cardContainer.innerHTML = ""; // Clear the card container
 
-        for (let anchor of anchors) {
-            // Debugging: Log the anchor hrefs
-            console.log('Anchor href:', anchor.href);
-
-            if (anchor.href.includes(`Songs/${type}`)) {
-                let folder = anchor.href.split("/").slice(-2)[0].replace("%20", " ");
+        for (let folder of response) {
+            if (folder.type === "dir") {
+                let albumInfo = await fetchJSON(`${url}/${folder.name}/info.json`);
                 
-                // Debugging: Log the folder name
-                console.log('Folder name:', folder);
-                
-                let albumInfo = await fetchJSON(`Songs/${type}/${folder}/info.json`);
-                
-                // Debugging: Log the album info
-                console.log('Album info:', albumInfo);
-                
-                cardContainer.innerHTML += `<div data-folder="${folder}" class="card">
+                cardContainer.innerHTML += `<div data-folder="${folder.name}" class="card">
                     <div class="play">
                         <svg xmlns="http://www.w3.org/2000/svg" data-encore-id="icon" role="img" aria-hidden="true"
                             viewBox="0 0 24 24" style="fill: black; width: 24px; height: 24px;">
@@ -127,7 +112,7 @@ async function displayAlbums(type) {
                             </path>
                         </svg>
                     </div>
-                    <img src="Songs/${type}/${folder}/cover.jpg" alt="Playlist">
+                    <img src="Songs/${type}/${folder.name}/cover.jpg" alt="Playlist">
                     <h3>${albumInfo.title}</h3>
                     <p>${albumInfo.description}</p>
                 </div>`;
@@ -197,7 +182,7 @@ function setupEventListeners() {
             playMusic(currentSong.src);
         }
     });
-    
+
     next.addEventListener("click", () => {
         let currentIndex = songs.indexOf(currentSong.src);
         if (currentIndex === -1) {
@@ -212,7 +197,6 @@ function setupEventListeners() {
             play.src = 'Assets/playsong.svg';
         }
     });
-    
 
     document.querySelector(".range input").addEventListener("change", (e) => {
         currentSong.volume = parseInt(e.target.value) / 100;
@@ -256,8 +240,7 @@ function setupEventListeners() {
 
 async function main() {
     await getSongs("Mood", "Bright");
-    const track = 'Songs/Mood/Bright/Construyendo en el Espacio - Luna Cantina.mp3';
-    playMusic(track, true);
+    playMusic(songs[0], true);
     displayAlbums("Artists");
     displayAlbums("Mood");
     displayAlbums("Genre");
