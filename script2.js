@@ -170,55 +170,46 @@ function setupEventListeners() {
     });
 
     previous.addEventListener("click", () => {
-    // Normalize the current song URL by replacing '%20' with a space
-    const currentSrc = currentSong.src.replaceAll("%20", ' ');
-    
-    // Find the index of the current song in the songs array
-    const currentIndex = songs.findIndex(song => song === currentSrc);
-    
-    console.log('Current Index (Previous):', currentIndex);
-    console.log('Current Song Source:', currentSrc);
-    console.log('Songs Array:', songs);
+        const baseUrl = 'https://kansihk-webwork.github.io/';
+        const currentSrc = currentSong.src.replace(baseUrl, '').replaceAll('%20', ' ');
+        const currentIndex = songs.findIndex(song => song.replaceAll('%20', ' ') === currentSrc);
+        console.log('Current Index (Previous):', currentIndex);
+        console.log('Current Song Source:', currentSrc);
+        console.log('Songs Array:', songs);
 
-    if (currentIndex === -1) {
-        console.warn('Current song is not in the list of songs.');
-        return;
-    }
+        if (currentIndex === -1) {
+            console.warn('Current song is not in the list of songs.');
+            return;
+        }
 
-    if (currentIndex > 0) {
-        playMusic(songs[currentIndex - 1]);
-    } else {
-        // Optionally loop to the last song if at the beginning
-        playMusic(songs[songs.length - 1]);
-    }
-});
+        if (currentIndex > 0) {
+            playMusic(songs[currentIndex - 1]);
+        } else {
+            // Optionally loop to the last song if at the beginning
+            playMusic(songs[songs.length - 1]);
+        }
+    });
 
-next.addEventListener("click", () => {
-    // Normalize the current song URL by replacing '%20' with a space
-    const currentSrc = currentSong.src.replaceAll("%20", ' ');
-    
-    // Find the index of the current song in the songs array
-    const currentIndex = songs.findIndex(song => song === currentSrc);
-    
-    console.log('Current Index (Next):', currentIndex);
-    console.log('Current Song Source:', currentSrc);
-    console.log('Songs Array:', songs);
+    next.addEventListener("click", () => {
+        const baseUrl = 'https://kansihk-webwork.github.io/';
+        const currentSrc = currentSong.src.replace(baseUrl, '').replaceAll('%20', ' ');
+        const currentIndex = songs.findIndex(song => song.replaceAll('%20', ' ') === currentSrc);
+        console.log('Current Index (Next):', currentIndex);
+        console.log('Current Song Source:', currentSrc);
+        console.log('Songs Array:', songs);
 
-    if (currentIndex === -1) {
-        console.warn('Current song is not in the list of songs.');
-        return;
-    }
+        if (currentIndex === -1) {
+            console.warn('Current song is not in the list of songs.');
+            return;
+        }
 
-    if (currentIndex + 1 < songs.length) {
-        playMusic(songs[currentIndex + 1]);
-    } else {
-        // Optionally loop to the first song if at the end
-        playMusic(songs[0]);
-    }
-});
-
-
-
+        if (currentIndex + 1 < songs.length) {
+            playMusic(songs[currentIndex + 1]);
+        } else {
+            // Optionally loop to the first song if at the end
+            playMusic(songs[0]);
+        }
+    });
 
     document.querySelector(".range input").addEventListener("change", (e) => {
         currentSong.volume = parseInt(e.target.value) / 100;
@@ -259,6 +250,7 @@ next.addEventListener("click", () => {
 
     updateCarousel();
 }
+
 
 async function main() {
     await getSongs("Mood", "Bright");
