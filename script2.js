@@ -48,7 +48,7 @@ async function getSongs(type, folder) {
     currtype = type;
 
     try {
-        let response = await fetchText(`/Songs/${currtype}/${folder}/`);
+        let response = await fetchText(`Songs/${currtype}/${folder}/`);
         let div = document.createElement("div");
         div.innerHTML = response;
         let as = div.getElementsByTagName("a");
@@ -56,7 +56,7 @@ async function getSongs(type, folder) {
         for (let element of as) {
             if (element.href.endsWith(".mp3")) {
                 const splitResult = element.href.split(`/${currfolder}/`);
-                songs.push(splitResult.length == 1 ? splitResult[0] : `/Songs/${currtype}/${currfolder}/${splitResult[1]}`);
+                songs.push(splitResult.length == 1 ? splitResult[0] : `Songs/${currtype}/${currfolder}/${splitResult[1]}`);
             }
         }
 
@@ -90,7 +90,7 @@ function updateSongListUI() {
     document.querySelectorAll(".songlist li").forEach(e => {
         e.querySelector(".playnow img").addEventListener("click", () => {
             const songName = e.querySelector(".info div").textContent.trim();
-            const url = `/Songs/${currtype}/${currfolder}/${encodeURIComponent(songName)}.mp3`;
+            const url = `Songs/${currtype}/${currfolder}/${encodeURIComponent(songName)}.mp3`;
             playMusic(url);
         });
     });
@@ -100,7 +100,7 @@ function updateSongListUI() {
 
 async function displayAlbums(type) {
     try {
-        let response = await fetchText(`/Songs/${type}/`);
+        let response = await fetchText(`Songs/${type}/`);
         let div = document.createElement("div");
         div.innerHTML = response;
         let anchors = div.getElementsByTagName("a");
@@ -111,13 +111,13 @@ async function displayAlbums(type) {
             // Debugging: Log the anchor hrefs
             console.log('Anchor href:', anchor.href);
 
-            if (anchor.href.includes(`/Songs/${type}/`)) {
+            if (anchor.href.includes(`Songs/${type}/`)) {
                 let folder = anchor.href.split("/").slice(-2)[0].replace("%20", " ");
                 
                 // Debugging: Log the folder name
                 console.log('Folder name:', folder);
                 
-                let albumInfo = await fetchJSON(`/Songs/${type}/${folder}/info.json`);
+                let albumInfo = await fetchJSON(`Songs/${type}/${folder}/info.json`);
                 
                 // Debugging: Log the album info
                 console.log('Album info:', albumInfo);
@@ -130,7 +130,7 @@ async function displayAlbums(type) {
                             </path>
                         </svg>
                     </div>
-                    <img src="/Songs/${type}/${folder}/cover.jpg" alt="Playlist">
+                    <img src="Songs/${type}/${folder}/cover.jpg" alt="Playlist">
                     <h3>${albumInfo.title}</h3>
                     <p>${albumInfo.description}</p>
                 </div>`;
