@@ -91,8 +91,8 @@ function updateSongListUI() {
 
 async function displayAlbums(type) {
     try {
-        const owner = 'your-username'; // Replace with your GitHub username
-        const repo = 'your-repo'; // Replace with your repository name
+        const owner = 'Kanishk-WebWork'; // Replace with your GitHub username
+        const repo = 'Kanishk-WebWork.github.io'; // Replace with your repository name
         const path = `Songs/${type}`;
         const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
