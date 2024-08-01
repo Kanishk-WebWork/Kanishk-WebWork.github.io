@@ -28,6 +28,7 @@ function convertSecondsToMinutes(seconds) {
 }
 
 function playMusic(track, pause = false) {
+    console.log(track);
     if (!track) {
         console.error('No track provided.');
         return;
