@@ -172,7 +172,7 @@ function setupEventListeners() {
     previous.addEventListener("click", () => {
         const baseUrl = 'https://kansihk-webwork.github.io/';
         const currentSrc = currentSong.src.replace(baseUrl, '').replaceAll('%20', ' ');
-        const currentIndex = songs.findIndex(song => song.replaceAll('%20', ' ') === currentSrc);
+        const currentIndex = songs.findIndex(song => song === currentSong.src.replace(baseURL,'').replaceAll('%20',' '))
         console.log('Current Index (Previous):', currentIndex);
         console.log('Current Song Source:', currentSrc);
         console.log('Songs Array:', songs);
@@ -193,7 +193,7 @@ function setupEventListeners() {
     next.addEventListener("click", () => {
         const baseUrl = 'https://kansihk-webwork.github.io/';
         const currentSrc = currentSong.src.replace(baseUrl, '').replaceAll('%20', ' ');
-        const currentIndex = songs.findIndex(song => song.replaceAll('%20', ' ') === currentSrc);
+        const currentIndex = songs.findIndex(song => song === currentSong.src.replace(baseURL,'').replaceAll('%20',' '))
         console.log('Current Index (Next):', currentIndex);
         console.log('Current Song Source:', currentSrc);
         console.log('Songs Array:', songs);
